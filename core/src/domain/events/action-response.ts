@@ -1,5 +1,6 @@
 import { SessionID } from '../value-objects';
 import { DomainEvent } from './domain-event';
+import { EventsName } from './events.enum';
 
 export enum ActionResponseStatus {
   SUCCESS = 'success',
@@ -26,7 +27,7 @@ export class ActionResponseEvent
       response: ActionResponsePayload;
     }>
 {
-  readonly name = 'ActionResponse';
+  readonly name = EventsName.ACTION_RESPONSE;
   public session_id: SessionID;
   public action_name: string;
   public response: ActionResponsePayload;

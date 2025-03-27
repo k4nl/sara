@@ -1,0 +1,7 @@
+{
+  "name": "@sara-ia/rabbitmq",
+  "version": "1.0.0",
+  "dependencies": {
+    "amqplib": "^0.x.x"
+  }
+}

@@ -9,42 +9,44 @@ export enum ConversationRole {
   LEAD = 'lead',
 }
 
-interface Message {
+export interface Message {
   role: ConversationRole;
   content: string;
 }
 
+export type ConversationProps = {
+  session_id: string | SessionID;
+  lead: Lead;
+  partner: Partner;
+};
+
 export class Conversation {
   private readonly context = BasePromptContext.init().value;
-
+  private readonly session_id: SessionID;
+  private readonly lead: Lead;
+  private readonly partner: Partner;
   private history: Message[] = [];
 
-  constructor(
-    private readonly sessionId: SessionID,
-    private lead: Lead,
-    private partner: Partner,
-  ) {
+  constructor(props: ConversationProps) {
+    this.session_id =
+      props.session_id instanceof SessionID
+        ? props.session_id
+        : new SessionID(props.session_id);
+    this.lead = props.lead;
+    this.partner = props.partner;
     this.history.push({ role: ConversationRole.SYSTEM, content: this.context });
   }
 
   getSessionId(): string {
-    return this.sessionId.value;
+    return this.session_id.value;
   }
 
-  getLead(): Lead | undefined {
+  getLead(): Lead {
     return this.lead;
   }
 
-  setLead(lead: Lead): void {
-    this.lead = lead;
-  }
-
-  getPartner(): Partner | undefined {
+  getPartner(): Partner {
     return this.partner;
-  }
-
-  setPartner(partner: Partner): void {
-    this.partner = partner;
   }
 
   addMessage(role: ConversationRole, content: string): void {

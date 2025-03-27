@@ -1,5 +1,6 @@
 import { DomainEvent } from './domain-event';
 import { SessionID } from '../value-objects';
+import { EventsName } from './events.enum';
 
 export type ActionRequestedEventProps = {
   session_id: string | SessionID;
@@ -15,13 +16,13 @@ export class ActionRequestedEvent<T = Record<string, unknown>>
       payload: T;
     }>
 {
-  readonly name = 'ActionRequested';
+  readonly name = EventsName.ACTION_REQUESTED;
   public session_id: SessionID;
   public action_name: string;
   public payload: T;
 
   constructor(props: ActionRequestedEventProps) {
-    if (props.action_name) {
+    if (!props.action_name) {
       throw new Error('Action name is required');
     }
 

@@ -1,5 +1,6 @@
 import { SessionID } from '../value-objects';
 import { DomainEvent } from './domain-event';
+import { EventsName } from './events.enum';
 
 export interface MessageReceivedPayload {
   session_id: string | SessionID;
@@ -9,7 +10,7 @@ export interface MessageReceivedPayload {
 export class MessageReceivedEvent
   implements DomainEvent<MessageReceivedPayload>
 {
-  readonly name = 'MessageReceived';
+  readonly name = EventsName.MESSAGE_RECEIVED;
 
   constructor(
     public readonly session_id: SessionID,
